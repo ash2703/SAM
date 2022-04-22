@@ -25,6 +25,9 @@ import dlib
 import multiprocessing as mp
 import math
 
+import sys
+sys.path.append(".")
+sys.path.append("..")
 from configs.paths_config import model_paths
 SHAPE_PREDICTOR_PATH = model_paths["shape_predictor"]
 
@@ -94,8 +97,8 @@ def align_face(filepath, predictor):
 	# read image
 	img = PIL.Image.open(filepath).convert("RGB")
 
-	output_size = 256
-	transform_size = 256
+	output_size = 512
+	transform_size = 512
 	enable_padding = True
 
 	# Shrink.

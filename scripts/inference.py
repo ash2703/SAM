@@ -29,11 +29,18 @@ def run():
 
 	# update test options with options used during training
 	ckpt = torch.load(test_opts.checkpoint_path, map_location='cpu')
+	
 	opts = ckpt['opts']
 	opts.update(vars(test_opts))
 	opts = Namespace(**opts)
-
+	# str_ids = opts.gpu_ids.split(',')
+	# opts.gpu_ids = []
+	# for str_id in str_ids:
+	# 	id = int(str_id)
+	# 	if id >= 0:
+	# 		opts.gpu_ids.append(id)
 	net = pSp(opts)
+	# net = torch.nn.DataParallel(net, opts.gpu_ids)
 	net.eval()
 	net.cuda()
 
@@ -45,6 +52,7 @@ def run():
 	dataset = InferenceDataset(root=opts.data_path,
 							   transform=transforms_dict['transform_inference'],
 							   opts=opts)
+	print(f'Loaded {len(dataset)} images for inferencing')
 	dataloader = DataLoader(dataset,
 							batch_size=opts.test_batch_size,
 							shuffle=False,

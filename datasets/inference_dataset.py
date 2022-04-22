@@ -7,7 +7,7 @@ class InferenceDataset(Dataset):
 
 	def __init__(self, root=None, paths_list=None, opts=None, transform=None, return_path=False):
 		if paths_list is None:
-			self.paths = sorted(data_utils.make_dataset(root))
+			self.paths = sorted(data_utils.make_dataset(root, dataset_size = opts.max_dataset_size))
 		else:
 			self.paths = data_utils.make_dataset_from_paths_list(paths_list)
 		self.transform = transform
